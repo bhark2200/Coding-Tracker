@@ -79,7 +79,7 @@ namespace Coding_Tracker
 
         internal static void ViewTable()
         {
-            Controller.Sessions.Clear();
+            Controller.CodingController.Sessions.Clear();
             using (var connection = new SQLiteConnection(dbConnectionString))
             {
                 connection.Open();
@@ -90,7 +90,7 @@ namespace Coding_Tracker
 
                     while (reader.Read())
                     {
-                        Controller.Sessions.Add(new CodingSession
+                        Controller.CodingController.Sessions.Add(new Controller.CodingSession
                         {
                             Id = reader.GetInt32(0),
                             StartTime = reader.GetString(1),

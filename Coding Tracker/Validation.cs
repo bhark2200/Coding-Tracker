@@ -8,5 +8,6 @@ namespace Coding_Tracker
 {
     internal class Validation
     {
+        
     }
 }
