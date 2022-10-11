@@ -40,6 +40,13 @@ namespace Coding_Tracker.Controller
             } while (systemRunning);
             
         }
+
+        internal static void InsertControl()
+        {
+            string format = "dd/MMM/yyyy h:mm tt"
+            CodingSession.StartTime = UserInput.GetTime($"Please input the start time in this format {format}.");
+        }
+
     }
 
 }
