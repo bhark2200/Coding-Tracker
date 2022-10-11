@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Coding_Tracker
 {
@@ -28,6 +24,83 @@ namespace Coding_Tracker
 
                     tableCmd.ExecuteNonQuery();
                 }
+            }
+        }
+
+        internal static void UpdateTable(int id, int duration)
+        {
+            using (var connection = new SQLiteConnection(dbConnectionString))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(connection))
+                {
+                    command.CommandText = "UPDATE codingTracker SET Duration = @duration WHERE Id = @id";
+                    command.Parameters.AddWithValue("@duration",duration);
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Prepare();
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        internal static void InsertTable(int id, int duration)
+        {
+            using (var connection = new SQLiteConnection(dbConnectionString))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(connection))
+                {
+                    command.CommandText = "INSERT INTO codingTracker(Duration) VALUES(@duration) WHERE Id = @id";
+                    command.Parameters.AddWithValue("@duration", duration);
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Prepare();
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        internal static void DeleteTable(int id)
+        {
+            using (var connection = new SQLiteConnection(dbConnectionString))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(connection))
+                {
+                    command.CommandText = "DELETE FROM codingTracker WHERE Id = @id";
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Prepare();
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        internal static void ViewTable()
+        {
+            Controller.Sessions.Clear();
+            using (var connection = new SQLiteConnection(dbConnectionString))
+            {
+                connection.Open();
+                var commandString = "SELECT * FROM codingTracker";
+                using (var command = new SQLiteCommand(commandString,connection))
+                {
+                    using SQLiteDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Controller.Sessions.Add(new CodingSession
+                        {
+                            Id = reader.GetInt32(0),
+                            StartTime = reader.GetString(1),
+                            EndTime = reader.GetString(2),
+                            Duration = reader.GetInt32(3)
+                        });
+                    }
+                }
+                
+                                                                             
             }
         }
     }
