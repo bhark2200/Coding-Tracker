@@ -10,38 +10,38 @@ namespace Coding_Tracker
 {
     internal class UserInput
     {
+        private static DateTime time;
+
         internal static string MenuItemSelected()
         {
             Visualization.OtherVisualOutput.MenuOptions();
             return Console.ReadLine().Trim().ToLower(); 
         }
 
-        internal static string GetTime(string message)
+        internal static DateTime GetTime(string message, string format)
         {
-            string format;
-            string timeToString = "";
-            DateTime time;
+            //string format;
+            bool timeIsExtracted = false;
             CultureInfo provider = CultureInfo.InvariantCulture;
             do
             {
                 Console.WriteLine(message);
                 var timeString = Console.ReadLine();
 
-                format = "dd/MMM/yyyy h:mm tt";
+                //format = "dd/MMM/yyyy h:mm tt";
                 try
                 {
                     time = DateTime.ParseExact(timeString, format, provider);
-                    timeToString = time.ToString();
-                    Console.WriteLine($"{timeString} converts to {timeToString}.");
-                    
+                    Console.WriteLine($"{timeString} converts to {time}.");
+                    timeIsExtracted = true;
                     
                 }
                 catch (FormatException)
                 {
                     Console.WriteLine($"{timeString} is not in the correct format.");
                 }
-            }while (timeToString.Length == 0);
-            return timeToString;
+            }while (!timeIsExtracted);
+            return time;
 
 
         }

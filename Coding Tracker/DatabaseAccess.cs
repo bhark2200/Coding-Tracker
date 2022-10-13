@@ -18,8 +18,8 @@ namespace Coding_Tracker
                         @"CREATE TABLE IF NOT EXISTS codingTracker (
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
                     StartTime TEXT,
-                    EndTime,
-                    Duration INTEGER
+                    EndTime TEXT,
+                    Duration TEXT
                     )";
 
                     tableCmd.ExecuteNonQuery();
@@ -44,16 +44,17 @@ namespace Coding_Tracker
             }
         }
 
-        internal static void InsertTable(int id, int duration)
+        internal static void InsertTable(string duration, string startTime, string endTime)
         {
             using (var connection = new SQLiteConnection(dbConnectionString))
             {
                 connection.Open();
                 using (var command = new SQLiteCommand(connection))
                 {
-                    command.CommandText = "INSERT INTO codingTracker(Duration) VALUES(@duration) WHERE Id = @id";
+                    command.CommandText = "INSERT INTO codingTracker (StartTime, EndTime, Duration) VALUES(@startTime, @endTime, @duration)";
+                    command.Parameters.AddWithValue("@startTime", startTime);
+                    command.Parameters.AddWithValue("@endTime", endTime);
                     command.Parameters.AddWithValue("@duration", duration);
-                    command.Parameters.AddWithValue("@id", id);
                     command.Prepare();
 
                     command.ExecuteNonQuery();
@@ -95,7 +96,7 @@ namespace Coding_Tracker
                             Id = reader.GetInt32(0),
                             StartTime = reader.GetString(1),
                             EndTime = reader.GetString(2),
-                            Duration = reader.GetInt32(3)
+                            Duration = reader.GetString(3)
                         });
                     }
                 }

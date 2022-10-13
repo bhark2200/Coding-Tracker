@@ -22,6 +22,7 @@ namespace Coding_Tracker.Controller
                     case "v":
                         break;
                     case "i":
+                        InsertControl();
                         break;
                     case "e":
                         break;
@@ -43,8 +44,17 @@ namespace Coding_Tracker.Controller
 
         internal static void InsertControl()
         {
-            string format = "dd/MMM/yyyy h:mm tt"
-            CodingSession.StartTime = UserInput.GetTime($"Please input the start time in this format {format}.");
+            string format = "M/dd/yyyy h:mm tt";
+            DateTime startTime = UserInput.GetTime($"Please input the start time in this format ({format}).", format);
+            DateTime endTime = UserInput.GetTime($"Please input the end time in this format ({format}.", format);
+            TimeSpan ts = endTime - startTime;
+            string startTimeString = startTime.ToString();
+            string endTimeString = endTime.ToString();
+            string duration = ts.ToString("c");
+            Console.WriteLine(duration);
+            DatabaseAccess.InsertTable(duration, startTimeString, endTimeString);
+
+
         }
 
     }
