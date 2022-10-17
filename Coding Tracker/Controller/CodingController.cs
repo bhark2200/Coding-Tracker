@@ -14,6 +14,7 @@ namespace Coding_Tracker.Controller
         internal static void MenuControl()
         {
             bool systemRunning = true;
+            DatabaseAccess.CreateTable();
             Visualization.TableVisualisationEngine.Welcome();
 
             do
@@ -27,6 +28,7 @@ namespace Coding_Tracker.Controller
                         InsertControl();
                         break;
                     case "e":
+                        UpdateControl();
                         break;
                     case "d":
                         DeleteControl();
@@ -47,17 +49,12 @@ namespace Coding_Tracker.Controller
 
         internal static void InsertControl()
         {
-            string format = "M/dd/yyyy h:mm tt";
-            DateTime startTime = UserInput.GetTime($"Please input the start time in this format ({format}).", format);
-            DateTime endTime = UserInput.GetTime($"Please input the end time in this format ({format}.", format);
-            TimeSpan ts = endTime - startTime;
-            string startTimeString = startTime.ToString();
-            string endTimeString = endTime.ToString();
-            string duration = ts.ToString("c");
-            Console.WriteLine(duration);
-            DatabaseAccess.InsertTable(duration, startTimeString, endTimeString);
-
-
+            List<string> timeList = GetTimeInputs("Please input the start time in this format", "Please input the end time in this format");
+            DatabaseAccess.InsertTable(timeList[2], timeList[0], timeList[1]);
+            DatabaseAccess.ViewTable();
+            Console.WriteLine("Row Inputed. Please hit enter to go to main menu.");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         internal static void DeleteControl()
@@ -71,6 +68,34 @@ namespace Coding_Tracker.Controller
             Console.WriteLine("Row Deleted. Please hit enter to go to main menu");
             Console.ReadLine();
             Console.Clear();            
+        }
+
+        internal static void UpdateControl()
+        {
+            Console.Clear();
+            DatabaseAccess.ViewTable();
+            var id = UserInput.GetItemById("Enter ID number of row you want to update.");
+            List<string> timeList = GetTimeInputs("Please input the start time in this format to update", "Please input the end time in this format to update ");
+            DatabaseAccess.UpdateTable(id, timeList[0], timeList[1], timeList[2]);
+            Console.Clear();
+            DatabaseAccess.ViewTable();
+            Console.WriteLine("Row Updated.  Please hit enter to go to main menu.");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
+        internal static List<string> GetTimeInputs(string startTimeMessage, string endTimeMessage)
+        {
+            List<string> timeList = new List<string>();
+            string format = "M/dd/yyyy h:mm tt";
+            DateTime startTime = UserInput.GetTime($"{startTimeMessage} ({format}).", format);
+            DateTime endTime = UserInput.GetTime($"{endTimeMessage} ({format}.", format);
+            TimeSpan ts = endTime - startTime;
+            timeList.Add(startTime.ToString());
+            timeList.Add(endTime.ToString());
+            timeList.Add(ts.ToString("c"));
+            return timeList;
+
         }
 
     }

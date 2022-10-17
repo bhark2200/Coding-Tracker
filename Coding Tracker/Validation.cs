@@ -12,6 +12,7 @@ namespace Coding_Tracker
     {
         internal static bool CheckIfIdIsThere(int idCheck)
         {
+            //see of Linq would work here
             foreach (var i in CodingController.table)
             {
                 if (idCheck == i.Id)

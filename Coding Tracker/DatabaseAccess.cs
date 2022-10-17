@@ -28,14 +28,16 @@ namespace Coding_Tracker
             }
         }
 
-        internal static void UpdateTable(int id, int duration)
+        internal static void UpdateTable(int id, string startTime, string endTime, string duration)
         {
             using (var connection = new SQLiteConnection(dbConnectionString))
             {
                 connection.Open();
                 using (var command = new SQLiteCommand(connection))
                 {
-                    command.CommandText = "UPDATE codingTracker SET Duration = @duration WHERE Id = @id";
+                    command.CommandText = "UPDATE codingTracker SET StartTime = @startTime, EndTime = @endTime, Duration = @duration WHERE Id = @id";
+                    command.Parameters.AddWithValue("@startTime", startTime);
+                    command.Parameters.AddWithValue("@endTime", endTime);
                     command.Parameters.AddWithValue("@duration",duration);
                     command.Parameters.AddWithValue("@id", id);
                     command.Prepare();
