@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using Coding_Tracker.Visualization;
+using System.Configuration;
 using System.Data.SQLite;
 
 
@@ -103,6 +104,7 @@ namespace Coding_Tracker
                 
                                                                              
             }
+            TableVisualisationEngine.CreateVisualTable();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Coding_Tracker
 
         internal static string MenuItemSelected()
         {
-            Visualization.OtherVisualOutput.MenuOptions();
+            Visualization.TableVisualisationEngine.MenuOptions();
             return Console.ReadLine().Trim().ToLower(); 
         }
 
@@ -42,6 +42,19 @@ namespace Coding_Tracker
             return time;
 
 
+        }
+
+        internal static int GetItemById(string message)
+        {
+            bool idCheck = true;
+            int id;
+            do
+            {
+                Console.WriteLine(message);
+                id = Validation.IsANumberEntered(message);
+                idCheck = Validation.CheckIfIdIsThere(id);
+            } while (!idCheck);
+            return id;
         }
     }
 }

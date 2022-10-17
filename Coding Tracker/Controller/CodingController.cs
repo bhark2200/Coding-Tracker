@@ -14,7 +14,7 @@ namespace Coding_Tracker.Controller
         internal static void MenuControl()
         {
             bool systemRunning = true;
-            Visualization.OtherVisualOutput.Welcome();
+            Visualization.TableVisualisationEngine.Welcome();
 
             do
             {
@@ -22,7 +22,6 @@ namespace Coding_Tracker.Controller
                 {
                     case "v":
                         DatabaseAccess.ViewTable();
-                        TableVisualisationEngine.CreateVisualTable();
                         break;
                     case "i":
                         InsertControl();
@@ -30,6 +29,7 @@ namespace Coding_Tracker.Controller
                     case "e":
                         break;
                     case "d":
+                        DeleteControl();
                         break;
                     case "q":
                         systemRunning = false;
@@ -58,6 +58,19 @@ namespace Coding_Tracker.Controller
             DatabaseAccess.InsertTable(duration, startTimeString, endTimeString);
 
 
+        }
+
+        internal static void DeleteControl()
+        {
+            Console.Clear();
+            DatabaseAccess.ViewTable();
+            var id = UserInput.GetItemById("Enter ID number of Row you want to Delete.");
+            DatabaseAccess.DeleteTable(id);
+            Console.Clear();
+            DatabaseAccess.ViewTable();
+            Console.WriteLine("Row Deleted. Please hit enter to go to main menu");
+            Console.ReadLine();
+            Console.Clear();            
         }
 
     }
