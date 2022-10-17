@@ -20,7 +20,6 @@ namespace Coding_Tracker
 
         internal static DateTime GetTime(string message, string format)
         {
-            //string format;
             bool timeIsExtracted = false;
             CultureInfo provider = CultureInfo.InvariantCulture;
             do
@@ -28,7 +27,6 @@ namespace Coding_Tracker
                 Console.WriteLine(message);
                 var timeString = Console.ReadLine();
 
-                //format = "dd/MMM/yyyy h:mm tt";
                 try
                 {
                     time = DateTime.ParseExact(timeString, format, provider);

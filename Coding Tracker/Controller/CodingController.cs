@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coding_Tracker.Visualization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Coding_Tracker.Controller
 {
     internal class CodingController
     {
-        internal static List<CodingSession> Sessions = new List<CodingSession>();
+        internal static List<CodingSession> table = new List<CodingSession>();
 
         internal static void MenuControl()
         {
@@ -20,6 +21,8 @@ namespace Coding_Tracker.Controller
                 switch (UserInput.MenuItemSelected())
                 {
                     case "v":
+                        DatabaseAccess.ViewTable();
+                        TableVisualisationEngine.CreateVisualTable();
                         break;
                     case "i":
                         InsertControl();

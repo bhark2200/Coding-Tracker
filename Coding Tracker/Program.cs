@@ -3,5 +3,5 @@ using Coding_Tracker.Controller;
 using Coding_Tracker.Visualization;
 
 DatabaseAccess.CreateTable();
-//CodingController.MenuControl();
-CodingController.InsertControl();
+CodingController.MenuControl();
+//CodingController.InsertControl();
