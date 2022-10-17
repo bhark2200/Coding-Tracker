@@ -6,16 +6,12 @@ namespace Coding_Tracker
     {
         internal static bool CheckIfIdIsThere(int idCheck)
         {
-            //see of Linq would work here
-            foreach (var i in CodingController.table)
+            bool isIdThere = CodingController.table.Any(c => c.Id == idCheck);
+            if (!isIdThere) 
             {
-                if (idCheck == i.Id)
-                {
-                    return true;
-                }
+                Console.WriteLine("ID not in system. Please choose a new Id.");
             }
-            Console.WriteLine("ID not in system. Please choose a new Id.");
-            return false;
+            return isIdThere;
         }
         internal static int IsANumberEntered(string message)
         {
