@@ -42,7 +42,7 @@
 
         internal static void InsertControl()
         {
-            List<string> timeList = GetTimeInputs("Please input the start time in this format", "Please input the end time in this format");
+            List<string> timeList = CalculateDuration("Please input the start time in this format", "Please input the end time in this format");
             DatabaseAccess.InsertTable(timeList[2], timeList[0], timeList[1]);
             DatabaseAccess.ViewTable();
             Console.WriteLine("Row Inputed. Please hit enter to go to main menu.");
@@ -68,7 +68,7 @@
             Console.Clear();
             DatabaseAccess.ViewTable();
             var id = UserInput.GetItemById("Enter ID number of row you want to update.");
-            List<string> timeList = GetTimeInputs("Please input the start time in this format to update", "Please input the end time in this format to update ");
+            List<string> timeList = CalculateDuration("Please input the start time in this format to update", "Please input the end time in this format to update ");
             DatabaseAccess.UpdateTable(id, timeList[0], timeList[1], timeList[2]);
             Console.Clear();
             DatabaseAccess.ViewTable();
@@ -77,7 +77,7 @@
             Console.Clear();
         }
 
-        internal static List<string> GetTimeInputs(string startTimeMessage, string endTimeMessage)
+        internal static List<string> CalculateDuration(string startTimeMessage, string endTimeMessage)
         {
             List<string> timeList = new List<string>();
             string format = "M/dd/yyyy h:mm tt";
