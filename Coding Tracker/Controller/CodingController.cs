@@ -1,11 +1,4 @@
-﻿using Coding_Tracker.Visualization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Coding_Tracker.Controller
+﻿namespace Coding_Tracker.Controller
 {
     internal class CodingController
     {

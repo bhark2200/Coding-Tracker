@@ -1,5 +1,3 @@
-﻿using Coding_Tracker;
-using Coding_Tracker.Controller;
-using Coding_Tracker.Visualization;
+﻿using Coding_Tracker.Controller;
 
 CodingController.MenuControl();
