@@ -15,7 +15,7 @@
                 switch (UserInput.MenuItemSelected())
                 {
                     case "v":
-                        DatabaseAccess.ViewTable();
+                        ViewControl();
                         break;
                     case "i":
                         InsertControl();
@@ -76,14 +76,31 @@
             Console.ReadLine();
             Console.Clear();
         }
+        internal static void ViewControl()
+        {
+            Console.Clear();
+            DatabaseAccess.ViewTable();
+            Console.WriteLine("Press enter to return to main menu.");
+            Console.Read();
+            Console.Clear();
+        }
 
         internal static List<string> CalculateDuration(string startTimeMessage, string endTimeMessage)
         {
             List<string> timeList = new List<string>();
             string format = "M/dd/yyyy h:mm tt";
-            DateTime startTime = UserInput.GetTime($"{startTimeMessage} ({format}).", format);
-            DateTime endTime = UserInput.GetTime($"{endTimeMessage} ({format}.", format);
-            TimeSpan ts = endTime - startTime;
+            bool isNegative;
+            DateTime startTime, endTime;
+            TimeSpan ts;
+            do
+            {
+                startTime = UserInput.GetTime($"{startTimeMessage} {format} (ex: 10/17/2022 7:00 pm).", format);
+                Console.Clear();
+                endTime = UserInput.GetTime($"{endTimeMessage} {format} (ex: 10/17/2022 7:00 pm).", format);
+                Console.Clear();
+                ts = endTime - startTime;
+                isNegative = Validation.CheckForNegativeHours(ts);
+            } while (!isNegative);
             timeList.Add(startTime.ToString());
             timeList.Add(endTime.ToString());
             timeList.Add(ts.ToString("c"));

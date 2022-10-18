@@ -33,5 +33,14 @@ namespace Coding_Tracker
 
             return intToReturn;
         }
+        internal static bool CheckForNegativeHours(TimeSpan ts)
+        {
+             bool checkTs = ts.Minutes > 0;
+            if (!checkTs)
+            {
+                Console.WriteLine("EndTime should be later than startTime.");
+            }
+            return checkTs;
+        }
     }
 }

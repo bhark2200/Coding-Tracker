@@ -31,6 +31,7 @@ namespace Coding_Tracker
                 catch (FormatException)
                 {
                     Console.WriteLine($"{timeString} is not in the correct format.");
+                    Console.ReadLine();
                     Console.Clear();
                 }
             }while (!timeIsExtracted);
